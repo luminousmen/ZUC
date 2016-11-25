@@ -1,6 +1,6 @@
 #include "ZUC.h"
 
-/* state registers LFSR*/
+/* state registers LFSR */
 unsigned int LFSR_S[16] = {0};
 
 /* F registers */
