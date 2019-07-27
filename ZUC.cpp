@@ -139,7 +139,13 @@ unsigned int L2(unsigned int X) {
 }
 
 /* create 32-bit word */
-#define MAKEU32(a, b, c ,d) (((unsigned int)(a) << 24) | ((unsigned int)(b) << 16) | ((unsigned int)(c) << 8) | ((unsigned int)(d)))
+#define MAKEU31(a, b, c) ( \
+    ((unsigned int)((unsigned int)(0) \
+    | (unsigned char)(a)) << 23) \
+    | ((unsigned int)(b) << 8) \
+    | (unsigned int)((unsigned int)(0) \
+    | (unsigned char)(c)))
+
 
 /* non-linear function F */
 unsigned int F(void) {
