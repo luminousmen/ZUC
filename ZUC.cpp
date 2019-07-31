@@ -1,14 +1,14 @@
 #include "ZUC.h"
 
 /* state registers LFSR */
-unsigned int LFSR_S[16] = {0};
+unsigned int LFSR_S[16] ;
 
 /* F registers */
-unsigned int F_R1 = 0;
-unsigned int F_R2 = 0;
+unsigned int F_R1 ;
+unsigned int F_R2 ;
 
 /* output of BR procedure */
-unsigned int BRC_X[4] = {0};
+unsigned int BRC_X[4] ;
 
 /* S-boxes */
 unsigned char S0[256] = {
@@ -139,7 +139,12 @@ unsigned int L2(unsigned int X) {
 }
 
 /* create 32-bit word */
-#define MAKEU32(a, b, c ,d) (((unsigned int)(a) << 24) | ((unsigned int)(b) << 16) | ((unsigned int)(c) << 8) | ((unsigned int)(d)))
+#define MAKEU32(a, b, c ,d) (\
+((unsigned int)(a) << 24) \
+| ((unsigned int)(b) << 16) \
+| ((unsigned int)(c) << 8) \
+| ((unsigned int)(d)))
+
 
 /* non-linear function F */
 unsigned int F(void) {
@@ -163,6 +168,7 @@ unsigned int F(void) {
     | (unsigned int)((unsigned int)(0) \
     | (unsigned char)(c)))
 
+
 void Initialization(unsigned char *k, unsigned char *iv) {
     unsigned int w;
 
@@ -170,7 +176,9 @@ void Initialization(unsigned char *k, unsigned char *iv) {
     for(int i = 0; i < 16; ++i) {
         LFSR_S[i] = MAKEU31(k[i], EK_d[i], iv[i]);
     }
-
+    /* set F_R1 and F_R2 to zero */
+    F_R1 = 0;
+    F_R2 = 0;	
     unsigned int nCount = 32;
     while (nCount > 0){
         BitReorganization();
